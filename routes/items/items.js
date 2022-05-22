@@ -28,4 +28,21 @@ router.get("/:name", function (req, res) {
 	}
 });
 
+router.patch("/:name", function (req, res) {
+	try {
+		const item = items.find((item) => item.name === req.params.name);
+		if (!item) {
+			res.send(404);
+			throw new ExpressError("Item not found.", 404);
+		}
+		item.name = req.body.name;
+		item.price = req.body.price;
+		res.status(200).json(
+			`updated: { name: ${item.name}, price: ${item.price}}`
+		);
+	} catch (err) {
+		return next(err);
+	}
+});
+
 module.exports = router;

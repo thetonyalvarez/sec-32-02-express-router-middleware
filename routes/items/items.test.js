@@ -56,3 +56,19 @@ describe("POST /items", function () {
 		);
 	});
 });
+
+describe("PATCH /items/:name", function () {
+	test("Modify a single item's name only", async function () {
+		const resp = await request(app).patch(`/items/popsicle`).send({
+			name: "new popsicle",
+			price: 3.4,
+		});
+		expect(resp.statusCode).toBe(200);
+
+		expect(resp.body).toContain("new popsicle");
+	});
+	test("Respond with 404 if not found", async function () {
+		const resp = await request(app).patch(`/items/nothing`);
+		expect(resp.statusCode).toBe(404);
+	});
+});
