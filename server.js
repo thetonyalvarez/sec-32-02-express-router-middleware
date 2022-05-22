@@ -1,7 +1,2 @@
-const express = require("express");
-const app = express();
-
-// Middlewares...
-// Routes...
-
-module.exports = app;
+const app = require("./app.js");
+app.listen(3000);
