@@ -22,9 +22,22 @@ afterEach(function () {
 describe("GET /items", function () {
 	test("Gets a list of items", async function () {
 		const resp = await request(app).get(`/items`);
-		console.log(resp.body);
 
 		expect(resp.body).toEqual([popsicle]);
+	});
+});
+
+describe("GET /items/:name", function () {
+	test("Gets the desired item from params", async function () {
+		const resp = await request(app).get(`/items/popsicle`);
+
+		expect(resp.body).toEqual(popsicle);
+	});
+	test("Throws error if item not found", async function () {
+		const resp = await request(app).get(`/items/nothing`);
+
+		expect(resp.statusCode).toEqual(404);
+		expect(resp.body).rejects;
 	});
 });
 
