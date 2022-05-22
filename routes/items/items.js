@@ -45,4 +45,19 @@ router.patch("/:name", function (req, res) {
 	}
 });
 
+router.delete("/:name", function (req, res) {
+	try {
+		console.log(items);
+		const item = items.find((item) => item.name === req.params.name);
+		if (!item) {
+			res.send(404);
+			throw new ExpressError("Item not found.", 404);
+		}
+		delete items[item];
+		res.status(200).json({ message: "Deleted" });
+	} catch (err) {
+		return next(err);
+	}
+});
+
 module.exports = router;
