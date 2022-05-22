@@ -23,8 +23,23 @@ describe("GET /items", function () {
 	test("Gets a list of items", async function () {
 		const resp = await request(app).get(`/items`);
 		console.log(resp.body);
-		expect(resp.statusCode).toBe(200);
 
 		expect(resp.body).toEqual([popsicle]);
+	});
+});
+
+describe("POST /items", function () {
+	test("Post a new item to our list of items", async function () {
+		const resp = await request(app).post(`/items`).send({
+			name: "cheerios",
+			price: 3.4,
+		});
+		expect(resp.statusCode).toBe(201);
+
+		expect(resp.body.items).toContainEqual(
+			expect.objectContaining({
+				name: "cheerios",
+			})
+		);
 	});
 });
